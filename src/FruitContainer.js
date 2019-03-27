@@ -20,7 +20,7 @@ class FruitContainer extends Component {
       let unmatchedFruits = this.props.fruitList.filter(fruit => {
         return !fruit.toLowerCase().includes(userInput);
       })
-     
+
       this.setState(prevState => ({ userInput, matchedFruits, unmatchedFruits }))
     }
     else {
