@@ -4,20 +4,30 @@ import FruitFilter from './FruitFilter';
 
 class FruitContainer extends Component {
   state = {
-    fruitList: this.props.fruitList,
     matchedFruits: this.props.fruitList,
+    unmatchedFruits: [],
     userInput: ''
   }
 
   handleChange(event){
-    let userInput = event.target.value
+    let userInput = event.target.value.toLowerCase()
 
     if (userInput !== '') {
-      let matchedFruits = this.state.fruitList.filter(fruit => {
-        return fruit.toLowerCase().includes(userInput.toLowerCase());
+      let matchedFruits = this.props.fruitList.filter(fruit => {
+        return fruit.toLowerCase().includes(userInput);
+      })
+
+      let unmatchedFruits = this.props.fruitList.filter(fruit => {
+        return !fruit.toLowerCase().includes(userInput);
       })
      
-      this.setState(prevState => ({ userInput, matchedFruits }))
+      this.setState(prevState => ({ userInput, matchedFruits, unmatchedFruits }))
+    }
+    else {
+      this.setState(prevState => ({
+        matchedFruits: this.props.fruitList,
+        unmatchedFruits: []
+      }))
     }
   }
   
@@ -26,15 +36,23 @@ class FruitContainer extends Component {
       return <FruitList fruit={fruit} key={index} />
     })
 
+    const unmatchedFruits = this.state.unmatchedFruits.map((fruit, index) => {
+      return <FruitList fruit={fruit} key={index} />
+    })
+
     console.log(this.state)
 
     return (
       <div>
         <FruitFilter handleChange={(event) => this.handleChange(event) }/>
-        hello Fruit Container
         <ul>
+          MATCHED FRUITS:
           {matchedFruits}
-        </ul>        
+        </ul>
+        <ul>
+          UNMATCHED FRUITS:
+          {unmatchedFruits}
+        </ul>                
       </div>
     )
   }
