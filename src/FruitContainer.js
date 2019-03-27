@@ -12,23 +12,15 @@ class FruitContainer extends Component {
   handleChange(event){
     let userInput = event.target.value.toLowerCase()
 
-    if (userInput !== '') {
-      let matchedFruits = this.props.fruitList.filter(fruit => {
-        return fruit.toLowerCase().includes(userInput);
-      })
+    let matchedFruits = this.props.fruitList.filter(fruit => {
+      return fruit.toLowerCase().includes(userInput);
+    })
 
-      let unmatchedFruits = this.props.fruitList.filter(fruit => {
-        return !fruit.toLowerCase().includes(userInput);
-      })
+    let unmatchedFruits = this.props.fruitList.filter(fruit => {
+      return !fruit.toLowerCase().includes(userInput);
+    })
 
-      this.setState(prevState => ({ userInput, matchedFruits, unmatchedFruits }))
-    }
-    else {
-      this.setState(prevState => ({
-        matchedFruits: this.props.fruitList,
-        unmatchedFruits: []
-      }))
-    }
+    this.setState(prevState => ({ userInput, matchedFruits, unmatchedFruits }))
   }
   
   render () {
